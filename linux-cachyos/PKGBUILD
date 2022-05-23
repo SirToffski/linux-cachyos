@@ -52,14 +52,14 @@ _per_gov=y
 _tcp_bbr2=y
 
 ### Running with a 1000HZ, 750Hz, 600 Hz or 500Hz tick rate
-_HZ_ticks=750
+_HZ_ticks=1000
 
 ## Choose between perodic, tickless idle or full tickless
 ### Full tickless can give higher performances in various cases but, depending on hardware, lower consistency.
 _tickrate=full
 
 ## Choose between full(low-latency), voluntary or server
-_preempt=voluntary
+_preempt=full
 
 ### Disable MQ-Deadline I/O scheduler
 _mq_deadline_disable=y
@@ -96,7 +96,7 @@ _nf_cone=y
 # Clang LTO mode, only available with the "llvm" compiler - options are "no", "full" or "thin".
 # "full: uses 1 thread for Linking, slow and uses more memory, theoretically with the highest performance gains."
 # "thin: uses multiple threads, faster and uses less memory, may have a lower runtime performance than Full."
-_use_llvm_lto=
+_use_llvm_lto=thin
 
 ## Change the thin lto cachedir for fixing building several dkms modules including zfs
 _thin_lto_cachedir=
@@ -135,7 +135,7 @@ license=('GPL2')
 options=('!strip')
 makedepends=('bc' 'texlive-latexextra' 'libelf' 'pahole' 'cpio' 'perl' 'tar' 'xz' 'zstd' 'xmlto' 'git' 'gcc' 'gcc-libs' 'glibc' 'binutils' 'make' 'patch')
 if [ -n "$_use_llvm_lto" ]; then
-    makedepends+=(clang llvm lld python)
+    makedepends+=(llvm-git llvm-libs-git python)
     BUILD_FLAGS=(
         CC=clang
         LD=ld.lld
